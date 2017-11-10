@@ -1,6 +1,7 @@
 import React from 'react'
 import BoardView from './BoardView.jsx'
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -16,6 +17,12 @@ class App extends React.Component {
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']]
     }
   }
+
+  sendMove() {
+    return request.get();
+  }
+
+
 
   render() {
     return (
