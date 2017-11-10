@@ -16,10 +16,31 @@ class App extends React.Component {
               ['pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl'],
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']]
     }
+
+    this.getBoard('idTest');
+    this.sendMove('e2-e4');
   }
 
-  sendMove() {
-    return request.get();
+  getBoard(id) {
+    return fetch(`/games?id=${id}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => console.log(data));
+  }
+
+  sendMove(move) {
+    return fetch('/games', {
+      method: 'POST',
+      body: JSON.stringify({move: move}),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
   }
 
 
