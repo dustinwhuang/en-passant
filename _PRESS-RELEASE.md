@@ -18,27 +18,37 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  en-passant
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  a lightweight chess game for those who want simplicity
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  en-passant is a chess app that strives to keep the interface simple, so that it will render quickly on any device.
+  It will allow anyone anywhere to play a game whenever they choose to as long as they have a link to that board.
 
 ## Problem ##
   > Describe the problem your product solves.
+  Eliminate the bloat from all the current online chess games out there
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  By using a simple interface, and unique urls to show game boards, so that no user accounts are needed to play.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+"en-passant will allow you to play chess anytime"
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  Just create a game or start sharing a board with a friend, all you need is the link.
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "It's so easy to use en-passant, that I can play with my grampa!"
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  If you've tried en-passant and want to improve your chess game, check out the puzzles at: chesstempo.com
