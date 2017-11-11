@@ -1,12 +1,36 @@
 import React from 'react'
 
-const SquareView = ({square, squareId, rowId, handleSquareClick}) => (
-  <td className={`${squareId}${rowId}`}
-    style={(squareId.charCodeAt() + rowId) % 2 === 0 ? {backgroundColor: 'lightGrey'} : {} }
-    onClick={() => handleSquareClick({col: squareId, row: rowId})}
-  >
-    <img src={square !== '' ? `images/${square}.png` : ""} alt={square} height="40" width="40" />
-  </td>
-)
+class SquareView extends React.Component {
+  constructor(props) {
+    super(props);
 
+  }
+
+  getBackgroundColor(square, squareId, row) {
+    if (/\(.*\)/.test(square)) {
+      return {backgroundColor: 'pink'};
+    } else if ((squareId.charCodeAt() + row) % 2 === 0) {
+      return {backgroundColor: 'lightGrey'};
+    } else {
+      return {backgroundColor: 'white'};
+    }
+  }
+
+  render() {
+    return (
+      <td
+        className={`${this.props.squareId}${this.props.rowId}`}
+        style={this.getBackgroundColor(this.props.square, this.props.squareId, this.props.rowId)}
+        onClick={() => this.props.handleSquareClick({col: this.props.squareId, row: this.props.rowId})}
+      >
+        <img
+          src={this.props.square !== '' ? `images/${/[RNBQKp][dl]/.exec(this.props.square)[0]}.png` : ""}
+          alt={this.props.square}
+          height="40"
+          width="40"
+        />
+      </td>
+    )
+  }
+}
 export default SquareView

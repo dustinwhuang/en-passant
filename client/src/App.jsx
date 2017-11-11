@@ -27,18 +27,24 @@ class App extends React.Component {
   }
 
   handleSquareClick(square) {
-    console.log(square.col, square.row);
-    if (!this.state.selected) {
-      this.setState({selected: true, square: square});
-    } else {
-      let board = this.state.board;
+    let board = this.state.board;
+    const col = square.col.charCodeAt() - 'a'.charCodeAt();
+    const row = 8 - square.row;
+
+    console.log(square.col, square.row, board[row][col]);
+    if (!this.state.selected && board[row][col] !== '') {
+      board[row][col] = `(${board[row][col]})`;
+      this.setState({selected: true, square: square, board: board});
+    } else if (this.state.selected) {
       if (square.row !== this.state.square.row || square.col !== this.state.square.col) {
-        board[8 - square.row][square.col.charCodeAt() - 'a'.charCodeAt()] = board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()];
+        board[row][col] = /[RNBQKp][dl]/.exec(board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()])[0];
         board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()] = '';
+      } else {
+        board[row][col] = /[RNBQKp][dl]/.exec(board[row][col])[0];
       }
       this.setState({selected: false, board: board})
-      console.log(this.state.board);
     }
+      console.log(this.state.board);
   }
 
   getBoard(id) {
