@@ -15,6 +15,15 @@ class App extends React.Component {
               ['', '', '', '', '', '', '', ''],
               ['', '', '', '', '', '', '', ''],
               ['', '', '', '', '', '', '', '']],
+      style: [['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', ''],
+              ['', '', '', '', '', '', '', '']],
+
       updatedAt: 0,
       selected: false,
       square: {col: '', row: ''},
@@ -29,22 +38,26 @@ console.log(props.match.params.id);
 
   handleSquareClick(square) {
     let board = this.state.board;
+    let style = this.state.style;
     const col = square.col.charCodeAt() - 'a'.charCodeAt();
     const row = 8 - square.row;
+    const sqCol = this.state.square.col.charCodeAt() - 'a'.charCodeAt();
+    const sqRow = 8 - this.state.square.row;
 
     console.log(square.col, square.row, board[row][col]);
     if (!this.state.selected && board[row][col] !== '') {
-      board[row][col] = `(${board[row][col]})`;
-      this.setState({selected: true, square: square, board: board});
+      style[row][col] = '@';
+      this.setState({selected: true, square: square, style: style});
     } else if (this.state.selected) {
       if (square.row !== this.state.square.row || square.col !== this.state.square.col) {
-        board[row][col] = /[RNBQKp][dl]/.exec(board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()])[0];
-        board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()] = '';
+        style[sqRow][sqCol] = '';
+        board[row][col] = board[sqRow][sqCol];
+        board[sqRow][sqCol] = '';
         this.sendBoard();
       } else {
-        board[row][col] = /[RNBQKp][dl]/.exec(board[row][col])[0];
+        style[row][col] = '';
       }
-      this.setState({selected: false, board: board})
+      this.setState({selected: false, board: board, style: style})
     }
       console.log(this.state.board);
   }
@@ -87,7 +100,7 @@ console.log(props.match.params.id);
       <div>
         <h2>en passant</h2>
         <div className="chessboard">
-          <BoardView board={this.state.board} handleSquareClick={this.handleSquareClick} />
+          <BoardView board={this.state.board} style={this.state.style} handleSquareClick={this.handleSquareClick} />
         </div>
       </div>
     );
