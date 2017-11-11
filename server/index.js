@@ -18,21 +18,21 @@ let idsRequested = {};
 app.post('/games', (req, res) => {
   console.log('post /games body: ', req.body);
   db.saveGame(req.body)
-    .then(game => res.send(game))
-    .then(() => delete idsRequested[req.body.id]);
+    .then(game => res.send(game));
+    idsRequested[req.body.id] = new Date();
+    console.log('save date', idsRequested[req.body.id]);
 });
 
 app.get('/games', (req, res) => {
   console.log('get /games query: ', req.query);
-  console.log('date', new Date() - idsRequested[req.query.id])
+  console.log('date', req.query.updatedAt, idsRequested[req.query.id])
   if (req.query.id === 'undefined') {
     db.createGame()
       .then(game => res.send(game));
-  } else if (idsRequested[req.query.id] === undefined || new Date() - idsRequested[req.query.id] > 10000) {
+  } else if (idsRequested[req.query.id] === undefined || req.query.updatedAt < idsRequested[req.query.id]) {
     console.log('query db');
-    idsRequested[req.query.id] = new Date();
     db.getGame(req.query.id)
-      .then(game => res.send(game));
+      .then(game => res.send({id: game.id, board:game.board, updatedAt: new Date()}));
   } else {
     res.end();
   }

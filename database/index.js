@@ -14,7 +14,6 @@ const board =  [['Rd', 'Nd', 'Bd', 'Qd', 'Kd', 'Bd', 'Nd', 'Rd'],
                 ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']];
 
 module.exports.createGame = () => {
-  console.log('createGame');
   return new Promise((resolve, reject) => {
     Game.create({board: JSON.stringify(board)})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
@@ -34,6 +33,6 @@ module.exports.saveGame = (game) => {
   return new Promise((resolve, reject) => {
     Game.findOneAndUpdate({_id: game.id}, {board: JSON.stringify(game.board)}, {new: true, upsert: true})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
-      .catch(err => console.log('getGame error: ', err));
+      .catch(err => console.log('saveGame error: ', err));
   });
 }

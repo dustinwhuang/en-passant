@@ -15,12 +15,14 @@ class App extends React.Component {
               ['', '', '', '', '', '', '', ''],
               ['pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl'],
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']],
+      updatedAt: 0,
       selected: false,
       square: {col: '', row: ''}
     }
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
-
+console.log(props.match.params.id);
+    this.getBoard(props.match.params.id);
     setInterval(() => this.getBoard(props.match.params.id), 500);
   }
 
@@ -47,15 +49,15 @@ class App extends React.Component {
   }
 
   getBoard(id) {
-    return fetch(`/games?id=${id}`, {
+    return fetch(`/games?id=${id}&updatedAt=${this.state.updatedAt}`, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
-      .then(game => this.setState({board: game.board}))
-    .catch(() => {/* Wait for update */});
+      .then(game => this.setState({board: game.board, updatedAt: game.updatedAt}))
+      .catch(() => {/* Wait for update */});
   }
 
   sendBoard() {
