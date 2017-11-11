@@ -1,5 +1,6 @@
 const express = require('express');
 const parser = require('body-parser');
+const db = require('../database');
 
 const app = express();
 
@@ -19,15 +20,11 @@ app.post('/games', (req, res) => {
 
 app.get('/games', (req, res) => {
   console.log('get /games query: ', req.query);
+  if (req.query.id === 'undefined') {
+    db.createGame()
+      .then(game => res.send(game));
+  }
 
-  res.send([['Rd', 'Nd', 'Bd', 'Qd', 'Kd', 'Bd', 'Nd', 'Rd'],
-              ['pd', 'pd', 'pd', 'pd', 'pd', 'pd', 'pd', 'pd'],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl', 'pl'],
-              ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']]);
 });
 
 

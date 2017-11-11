@@ -17,7 +17,8 @@ class App extends React.Component {
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']]
     }
 
-    this.getBoard('idTest');
+    this.getBoard()
+      .then(game => console.log(game));
     this.sendMove('e2-e4');
   }
 
