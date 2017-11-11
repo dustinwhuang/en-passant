@@ -13,23 +13,23 @@ app.use((req, res, next) => {
   next();
 });
 
-let idsRequested = {};
+let idsUpdatedAt = {};
 
 app.post('/games', (req, res) => {
   console.log('post /games body: ', req.body);
   db.saveGame(req.body)
     .then(game => res.send(game));
-    idsRequested[req.body.id] = new Date();
-    console.log('save date', idsRequested[req.body.id]);
+    idsUpdatedAt[req.body.id] = new Date();
+    console.log('save date', idsUpdatedAt[req.body.id]);
 });
 
 app.get('/games', (req, res) => {
   console.log('get /games query: ', req.query);
-  console.log('date', req.query.updatedAt, idsRequested[req.query.id])
+  console.log('date', new Date(req.query.updatedAt), idsUpdatedAt[req.query.id]);
   if (req.query.id === 'undefined') {
     db.createGame()
       .then(game => res.send(game));
-  } else if (idsRequested[req.query.id] === undefined || req.query.updatedAt < idsRequested[req.query.id]) {
+  } else if (idsUpdatedAt[req.query.id] === undefined || new Date(req.query.updatedAt) < idsUpdatedAt[req.query.id]) {
     console.log('query db');
     db.getGame(req.query.id)
       .then(game => res.send({id: game.id, board:game.board, updatedAt: new Date()}));
