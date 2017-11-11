@@ -17,7 +17,7 @@ class App extends React.Component {
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']]
     }
 
-    this.getBoard()
+    this.getBoard('5a0640063578c225ede702d9')
       .then(game => console.log(game));
     this.sendMove('e2-e4');
   }
@@ -29,8 +29,7 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
-      .then(data => console.log(data));
+      .then(response => response.json());;
   }
 
   sendMove(move) {

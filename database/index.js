@@ -24,12 +24,16 @@ module.exports.createGame = () => {
 
 module.exports.getGame = (id) => {
   return new Promise((resolve, reject) => {
-
+    Game.findOne({_id: id})
+      .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
+      .catch(err => console.log('getGame error: ', err));
   });
 }
 
-module.exports.saveGame = () => {
+module.exports.saveGame = (board) => {
   return new Promise((resolve, reject) => {
-
+    Game.findOneAndUpdate({_id: id}, {board: JSON.stringify(board)}, {new: true, upsert: true})
+      .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
+      .catch(err => console.log('getGame error: ', err));
   });
 }

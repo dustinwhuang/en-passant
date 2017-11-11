@@ -23,8 +23,10 @@ app.get('/games', (req, res) => {
   if (req.query.id === 'undefined') {
     db.createGame()
       .then(game => res.send(game));
+  } else {
+    db.getGame(req.query.id)
+      .then(game => res.send(game));
   }
-
 });
 
 
