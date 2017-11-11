@@ -17,13 +17,14 @@ class App extends React.Component {
               ['Rl', 'Nl', 'Bl', 'Ql', 'Kl', 'Bl', 'Nl', 'Rl']],
       updatedAt: 0,
       selected: false,
-      square: {col: '', row: ''}
+      square: {col: '', row: ''},
+      interval: null
     }
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
 console.log(props.match.params.id);
     this.getBoard(props.match.params.id);
-    setInterval(() => this.getBoard(props.match.params.id), 500);
+    this.state.interval = setInterval(() => this.getBoard(props.match.params.id), 500);
   }
 
   handleSquareClick(square) {
@@ -55,7 +56,15 @@ console.log(props.match.params.id);
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json())
+      .then(response =>  {
+        // Redirect if game not found
+        if (response.status !== 200) {
+          clearInterval(this.state.interval);
+          this.props.history.push('/');
+        } else {
+          return response.json();
+        }
+      })
       .then(game => this.setState({board: game.board, updatedAt: game.updatedAt}))
       .catch(() => {/* Wait for update */});
   }

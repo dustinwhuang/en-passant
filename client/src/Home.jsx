@@ -25,12 +25,25 @@ class Home extends React.Component {
   }
 
   handleInputChange(e) {
-    this.setState({id: e.target.value});
+    this.setState({id: /[^\/]+$/.exec(e.target.value)[0]});
   }
 
   joinGame(e) {
-    e.preventDefault();
-    this.props.history.push(`/${this.state.id}`);
+    e.preventDefault();   
+    fetch(`/games?id=${this.state.id}`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status !== 200) {
+          document.getElementById('message').innerText = 'Game not found';
+        } else {
+          document.getElementById('message').innerText = '';
+          this.props.history.push(`/${this.state.id}`);
+        }
+      });
   }
 
   render() {
@@ -41,6 +54,7 @@ class Home extends React.Component {
           <div className="create">
             <button id="new-game" onClick={this.createGame}>New Game</button>
           </div>
+          <div id="message" />
           <div className="join">
             <form>
               <input type="text" id="game-id" onChange={e => this.handleInputChange(e)} />

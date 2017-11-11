@@ -17,7 +17,7 @@ module.exports.createGame = () => {
   return new Promise((resolve, reject) => {
     Game.create({board: JSON.stringify(board)})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
-      .catch(err => console.log('createGame error: ', err));
+      .catch(err => reject(err));
   });
 }
 
@@ -25,7 +25,7 @@ module.exports.getGame = (id) => {
   return new Promise((resolve, reject) => {
     Game.findOne({_id: id})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
-      .catch(err => console.log('getGame error: ', err));
+      .catch(err => reject(err));
   });
 }
 
@@ -33,6 +33,6 @@ module.exports.saveGame = (game) => {
   return new Promise((resolve, reject) => {
     Game.findOneAndUpdate({_id: game.id}, {board: JSON.stringify(game.board)}, {new: true, upsert: true})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
-      .catch(err => console.log('saveGame error: ', err));
+      .catch(err => reject(err));
   });
 }

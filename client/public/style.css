@@ -43,6 +43,9 @@ input#join-game {
   font-size: 18px;
 }
 
-.join {
+#message {
   margin-top: 50px;
+  height: 20px;
+  font-family: 'Verdana';
+  color: red;
 }

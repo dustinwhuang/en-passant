@@ -32,11 +32,15 @@ app.get('/games', (req, res) => {
   } else if (idsUpdatedAt[req.query.id] === undefined || new Date(req.query.updatedAt) < idsUpdatedAt[req.query.id]) {
     console.log('query db');
     db.getGame(req.query.id)
-      .then(game => res.send({id: game.id, board:game.board, updatedAt: new Date()}));
+      .then(game => res.send({id: game.id, board:game.board, updatedAt: new Date()}))
+      .catch(err => res.sendStatus(404));
   } else {
     res.end();
   }
 });
 
+app.get('*', (req, res) => {
+    res.redirect('/');
+});
 
 app.listen(process.env.PORT || 3000, () => console.log(`listening on  port ${process.env.PORT || 3000}`));
