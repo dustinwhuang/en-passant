@@ -21,7 +21,7 @@ class App extends React.Component {
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
-    setInterval(() => this.getBoard(props.match.params.id), 1000);
+    setInterval(() => this.getBoard(props.match.params.id), 500);
   }
 
   handleSquareClick(square) {
@@ -54,7 +54,8 @@ class App extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(game => this.setState({board: game.board}));
+      .then(game => this.setState({board: game.board}))
+    .catch(() => {/* Wait for update */});
   }
 
   sendBoard() {
