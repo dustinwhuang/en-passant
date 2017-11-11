@@ -5,7 +5,7 @@ class Home extends React.Component {
     super(props);
 
     this.state = {
-      id: 'undefined'
+      id: ''
     }
 
     this.createGame = this.createGame.bind(this);
