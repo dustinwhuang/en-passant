@@ -21,7 +21,7 @@ class App extends React.Component {
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
-    this.getBoard(props.match.params.id);
+    setInterval(() => this.getBoard(props.match.params.id), 1000);
   }
 
   handleSquareClick(square) {
