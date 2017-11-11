@@ -16,6 +16,8 @@ app.use((req, res, next) => {
 
 app.post('/games', (req, res) => {
   console.log('post /games body: ', req.body);
+  db.saveGame(req.body)
+    .then(game => res.send(game));
 });
 
 app.get('/games', (req, res) => {

@@ -21,9 +21,7 @@ class App extends React.Component {
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
 
-    this.getBoard('5a0640063578c225ede702d9')
-      .then(game => this.state.board = game.board);
-    this.sendMove('e2-e4');
+    this.getBoard(props.match.params.id);
   }
 
   handleSquareClick(square) {
@@ -39,6 +37,7 @@ class App extends React.Component {
       if (square.row !== this.state.square.row || square.col !== this.state.square.col) {
         board[row][col] = /[RNBQKp][dl]/.exec(board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()])[0];
         board[8 - this.state.square.row][this.state.square.col.charCodeAt() - 'a'.charCodeAt()] = '';
+        this.sendBoard();
       } else {
         board[row][col] = /[RNBQKp][dl]/.exec(board[row][col])[0];
       }
@@ -54,13 +53,14 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-      .then(response => response.json());;
+      .then(response => response.json())
+      .then(game => this.setState({board: game.board}));
   }
 
-  sendMove(move) {
+  sendBoard() {
     return fetch('/games', {
       method: 'POST',
-      body: JSON.stringify({move: move}),
+      body: JSON.stringify({id: this.props.match.params.id, board: this.state.board}),
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'

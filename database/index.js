@@ -30,9 +30,9 @@ module.exports.getGame = (id) => {
   });
 }
 
-module.exports.saveGame = (board) => {
+module.exports.saveGame = (game) => {
   return new Promise((resolve, reject) => {
-    Game.findOneAndUpdate({_id: id}, {board: JSON.stringify(board)}, {new: true, upsert: true})
+    Game.findOneAndUpdate({_id: game.id}, {board: JSON.stringify(game.board)}, {new: true, upsert: true})
       .then(doc => resolve({id: doc._id, board: JSON.parse(doc.board)}))
       .catch(err => console.log('getGame error: ', err));
   });
