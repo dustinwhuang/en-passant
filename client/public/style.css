@@ -1,5 +1,8 @@
 body {
-  font-family: 'Verdana';
+  font-family: 'Architects Daughter', 'Verdana', sans-serif;
+  width: 427px;
+  margin: auto;
+  text-align: center
 }
 
 table#chessboard {
@@ -13,4 +16,33 @@ td {
   width: 50px;
   text-align: center;
   vertical-align: center;
+}
+
+.options {
+  margin-left: 25%;
+  width: 50%;
+}
+
+button#new-game {
+  height: 40px;
+  width: 98%;
+  font-size: 18px;
+}
+
+input#game-id {
+  display: block;
+  height: 30px;
+  width: 98%;
+  font-size: 14px;
+}
+
+input#join-game {
+  display: block;
+  height: 40px;
+  width: 100%;
+  font-size: 18px;
+}
+
+.join {
+  margin-top: 50px;
 }
