@@ -1,6 +1,6 @@
 import React from 'react'
 import BoardView from './BoardView.jsx'
-
+import {findPaths} from './Pathing.js'
 
 class App extends React.Component {
   constructor(props) {
@@ -15,20 +15,15 @@ class App extends React.Component {
               ['', '', '', '', '', '', '', ''],
               ['', '', '', '', '', '', '', ''],
               ['', '', '', '', '', '', '', '']],
-      style: [['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', ''],
-              ['', '', '', '', '', '', '', '']],
-
+      style: null,
+      clearStyles: null,
       updatedAt: 0,
       selected: false,
       square: {col: '', row: ''},
       interval: null
     }
+    this.state.style = JSON.parse(JSON.stringify(this.state.board));
+    this.state.clearStyles = JSON.stringify(this.state.board);
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
 console.log(props.match.params.id);
@@ -48,19 +43,26 @@ console.log(props.match.params.id);
     if (!this.state.selected && board[row][col] !== '') {
       style[row][col] = '@';
       this.setState({selected: true, square: square, style: style});
+      this.highlightPaths(row, col);
     } else if (this.state.selected) {
-      if (square.row !== this.state.square.row || square.col !== this.state.square.col) {
-        style[sqRow][sqCol] = '';
+      if (/[\*!]/.test(style[row][col]) && (square.row !== this.state.square.row || square.col !== this.state.square.col)) {
         board[row][col] = board[sqRow][sqCol];
         board[sqRow][sqCol] = '';
         this.sendBoard();
-      } else {
-        style[row][col] = '';
       }
-      this.setState({selected: false, board: board, style: style})
+      this.setState({selected: false, board: board, style: JSON.parse(this.state.clearStyles)})
     }
-      console.log(this.state.board);
   }
+
+  highlightPaths(row, col) {
+    let board = this.state.board;
+    let style = this.state.style;
+
+    findPaths(row, col, board, style);
+
+    this.setState({style: style});
+  }
+
 
   getBoard(id) {
     return fetch(`/games?id=${id}&updatedAt=${this.state.updatedAt}`, {

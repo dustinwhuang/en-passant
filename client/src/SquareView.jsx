@@ -8,6 +8,10 @@ class SquareView extends React.Component {
 
   getBackgroundColor(style, squareId, row) {
     if (style === '@') {
+      return {backgroundColor: 'hotPink'};
+    } else if (style === '*') {
+      return {backgroundColor: 'mistyRose'};
+    } else if (style === '!') {
       return {backgroundColor: 'pink'};
     } else if ((squareId.charCodeAt() + row) % 2 === 0) {
       return {backgroundColor: 'lightGrey'};
