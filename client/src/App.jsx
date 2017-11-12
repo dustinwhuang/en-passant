@@ -20,7 +20,8 @@ class App extends React.Component {
       updatedAt: 0,
       selected: false,
       square: {col: '', row: ''},
-      interval: null
+      interval: null,
+      flipped: false
     }
     this.state.style = JSON.parse(JSON.stringify(this.state.board));
     this.state.clearStyles = JSON.stringify(this.state.board);
@@ -102,7 +103,12 @@ console.log(props.match.params.id);
       <div>
         <h2>en passant</h2>
         <div className="chessboard">
-          <BoardView board={this.state.board} style={this.state.style} handleSquareClick={this.handleSquareClick} />
+          <BoardView
+            board={this.state.board}
+            style={this.state.style}
+            handleSquareClick={this.handleSquareClick}
+            flipped={this.state.flipped}
+          />
         </div>
       </div>
     );
