@@ -50,6 +50,7 @@ class Home extends React.Component {
     return (
       <div>
         <h1>en passant</h1>
+        <h3>a simple chess game</h3>
         <div className="options">
           <div className="create">
             <button id="new-game" onClick={this.createGame}>New Game</button>

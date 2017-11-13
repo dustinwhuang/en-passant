@@ -1,8 +1,20 @@
 body {
-  font-family: 'Architects Daughter', 'Verdana', sans-serif;
-  width: 427px;
+  font-family: 'Verdana', sans-serif;
+  width: 547px;
   margin: auto;
   text-align: center
+}
+
+h1, h2, h3 {
+  font-family: 'Architects Daughter', 'Verdana', sans-serif;
+}
+
+.container {
+  display: flex;
+}
+
+.chessboard {
+  width: 427px;
 }
 
 table#chessboard {
@@ -46,6 +58,35 @@ input#join-game {
 #message {
   margin-top: 50px;
   height: 20px;
-  font-family: 'Verdana';
   color: red;
+}
+
+.settings {
+  flex-grow: 1;
+  width: 100px;
+  float:right;
+  font-size: 12px;
+  text-align: left;
+  margin-top: 40px;
+  margin-left: 20px;
+  display: flex;
+}
+
+.gear {
+  position: relative;
+  width: 20px;
+  margin-left: -40px;
+}
+
+#settings-menu {
+  display: none;
+  border: 1px #dadada solid;
+  background-color: white;
+  flex-grow: 1;
+  margin-top: -30px;
+  margin-left: 10px;
+}
+
+#settings-menu label {
+  display: block;
 }

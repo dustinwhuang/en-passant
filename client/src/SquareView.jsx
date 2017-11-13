@@ -6,12 +6,12 @@ class SquareView extends React.Component {
 
   }
 
-  getBackgroundColor(style, squareId, row) {
+  getBackgroundColor(style, squareId, row, settings) {
     if (style === '@') {
       return {backgroundColor: 'hotPink'};
-    } else if (style === '*') {
+    } else if (style === '*' && settings.paths) {
       return {backgroundColor: 'mistyRose'};
-    } else if (style === '!') {
+    } else if (style === '!' && settings.paths) {
       return {backgroundColor: 'pink'};
     } else if ((squareId.charCodeAt() + row) % 2 === 0) {
       return {backgroundColor: 'lightGrey'};
@@ -24,7 +24,7 @@ class SquareView extends React.Component {
     return (
       <td
         className={`${this.props.squareId}${this.props.rowId}`}
-        style={this.getBackgroundColor(this.props.style, this.props.squareId, this.props.rowId)}
+        style={this.getBackgroundColor(this.props.style, this.props.squareId, this.props.rowId, this.props.settings)}
         onClick={() => this.props.handleSquareClick({col: this.props.squareId, row: this.props.rowId})}
       >
         <img

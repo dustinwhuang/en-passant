@@ -21,13 +21,15 @@ class App extends React.Component {
       selected: false,
       square: {col: '', row: ''},
       interval: null,
-      flipped: false
+      settings: {expanded: false, flipped: false, paths: true, moves: false}
     }
     this.state.style = JSON.parse(JSON.stringify(this.state.board));
     this.state.clearStyles = JSON.stringify(this.state.board);
 
     this.handleSquareClick = this.handleSquareClick.bind(this);
-console.log(props.match.params.id);
+    this.showSettings = this.showSettings.bind(this);
+    this.toggleSettings = this.toggleSettings.bind(this);
+
     this.getBoard(props.match.params.id);
     this.state.interval = setInterval(() => this.getBoard(props.match.params.id), 500);
   }
@@ -98,17 +100,43 @@ console.log(props.match.params.id);
 
 
 
+  showSettings() {
+    if (!this.state.settings.expanded) {
+      document.getElementById('settings-menu').style.display = 'block';
+      this.setState({settings: Object.defineProperty(this.state.settings, 'expanded', {value: true})});
+    } else {
+      document.getElementById('settings-menu').style.display = 'none';
+      this.setState({settings: Object.defineProperty(this.state.settings, 'expanded', {value: false})});
+    }
+  }
+
+  toggleSettings(e) {
+    this.setState({settings: Object.defineProperty(this.state.settings, e.target.id, {value: !this.state.settings[e.target.id]})});
+  }
+
   render() {
     return (
-      <div>
-        <h2>en passant</h2>
+      <div className="container">
         <div className="chessboard">
+          <h2>en passant</h2>
           <BoardView
             board={this.state.board}
             style={this.state.style}
             handleSquareClick={this.handleSquareClick}
-            flipped={this.state.flipped}
+            settings={this.state.settings}
           />
+        </div>
+        <div className="rightBar">
+          <div className="settings">
+            <div className="gear" onClick={this.showSettings}>
+              <img src="images/settings.png" alt="settings" height="20" width="20" />
+            </div>
+            <div id="settings-menu">
+              <label><input type="checkbox" id="flipped" onClick={this.toggleSettings} />Flip board</label>
+              <label><input type="checkbox" id="paths" onClick={this.toggleSettings} defaultChecked />Show paths</label>
+              <label><input type="checkbox" id="moves" onClick={this.toggleSettings} />Show history</label>
+            </div>
+          </div>
         </div>
       </div>
     );

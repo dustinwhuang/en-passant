@@ -11,29 +11,34 @@ const BoardView = (props) => (
   </div>
 )
 
-const renderBoard = ({board, style, handleSquareClick, flipped}) => {
-  if (flipped) {
+const renderBoard = ({board, style, handleSquareClick, settings}) => {
+  if (settings.flipped) {
     return board.reduceRight((m, row, rowId) => m.concat(
       <tr className={rowId} key={rowId}>
         {row.reduceRight((m, square, key) => m.concat(<SquareView
           square={square}
-          style={style[key]}
+          style={style[rowId][key]}
           squareId={String.fromCharCode('a'.charCodeAt()  + key)} 
-          rowId={rowId}
+          rowId={8 - rowId}
           handleSquareClick={handleSquareClick}
+          settings={settings}
           key={key}
-          />), [])}
-      </tr>), []
+          />), 
+          []
+        )}
+      </tr>),
+      []
     );
   } else {
     return board.map((row, rowId) => (
       <tr className={rowId} key={rowId}>
         {row.map((square, key) => <SquareView
           square={square}
-          style={style[key]}
+          style={style[rowId][key]}
           squareId={String.fromCharCode('a'.charCodeAt()  + key)} 
-          rowId={rowId}
+          rowId={8 - rowId}
           handleSquareClick={handleSquareClick}
+          settings={settings}
           key={key}
           />)}
       </tr>)
