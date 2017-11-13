@@ -1,6 +1,6 @@
 body {
   font-family: 'Verdana', sans-serif;
-  width: 547px;
+  width: 565px;
   margin: auto;
   text-align: center
 }
@@ -63,13 +63,15 @@ input#join-game {
 
 .settings {
   flex-grow: 1;
-  width: 100px;
+  width: 110px;
   float:right;
   font-size: 12px;
   text-align: left;
   margin-top: 40px;
   margin-left: 20px;
+  margin-right: 18px;
   display: flex;
+  height: 34px;
 }
 
 .gear {
@@ -85,8 +87,16 @@ input#join-game {
   flex-grow: 1;
   margin-top: -30px;
   margin-left: 10px;
+  height: 55px;
 }
 
 #settings-menu label {
   display: block;
+}
+
+.moves select {
+  width: 138px;
+  height: 427px;
+  margin-left: 10px;
+  font-family: monospace;
 }

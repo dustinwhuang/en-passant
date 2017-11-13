@@ -32,7 +32,7 @@ app.get('/games', (req, res) => {
   } else if (idsUpdatedAt[req.query.id] === undefined || new Date(req.query.updatedAt) < idsUpdatedAt[req.query.id]) {
     console.log('query db');
     db.getGame(req.query.id)
-      .then(game => res.send({id: game.id, board:game.board, updatedAt: new Date()}))
+      .then(game => res.send({id: game.id, board: game.board, moves: game.moves, updatedAt: new Date()}))
       .catch(err => res.sendStatus(404));
   } else {
     res.end();
