@@ -56,7 +56,6 @@ class App extends React.Component {
         let finish = `${board[row][col] ? 'x' : '-'}${(/[RNBQK]/.exec(board[row][col]) || [''])[0]}${square.col}${square.row}`;
         console.log(start + finish);
         moves = this.state.moves.concat(start + finish);
-        console.log(this.state.moves);
         board[row][col] = board[sqRow][sqCol];
         board[sqRow][sqCol] = '';
         if (style[row][col] === '%') {  //en passant
@@ -100,7 +99,6 @@ class App extends React.Component {
   }
 
   sendBoard(board, moves) {
-    console.log(this.state.moves);
     return fetch('/games', {
       method: 'POST',
       body: JSON.stringify({id: this.props.match.params.id, board: board, moves: moves}),
