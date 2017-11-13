@@ -40,7 +40,7 @@ app.get('/games', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-    res.redirect('/');
+  res.sendFile('index.html', {root: __dirname + '/../client/public/'});
 });
 
 app.listen(process.env.PORT || 3000, () => console.log(`listening on  port ${process.env.PORT || 3000}`));
