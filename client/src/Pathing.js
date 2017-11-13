@@ -1,6 +1,6 @@
-export const findPaths = (row, col, board, style) => {
+export const findPaths = (row, col, board, style, moves) => {
   if (board[row][col][0] === 'p') {
-      pawnPaths(row, col, board, style);
+      pawnPaths(row, col, board, style, moves);
     } else if (board[row][col][0] === 'R') {
       rookPaths(row, col, board, style);
     } else if (board[row][col][0] === 'N') {
@@ -10,12 +10,12 @@ export const findPaths = (row, col, board, style) => {
     } else if (board[row][col][0] === 'Q') {
       queenPaths(row, col, board, style);
     } else if (board[row][col][0] === 'K') {
-      kingPaths(row, col, board, style);
+      kingPaths(row, col, board, style, moves);
     }
 }
 
 // TODO: en passant
-const pawnPaths = (row, col, board, style) => {
+const pawnPaths = (row, col, board, style, moves) => {
   if (board[row][col] === 'pl') {
     if (board[row - 1][col] === '') {
       style[row - 1][col] = '*';
@@ -24,6 +24,20 @@ const pawnPaths = (row, col, board, style) => {
     // pawn capture
     board[row - 1][col - 1] && board[row - 1][col - 1] !== '' && board[row - 1][col - 1][1] !== 'l' ? style[row - 1][col - 1] = '!' : false;
     board[row - 1][col + 1] && board[row - 1][col + 1] !== '' && board[row - 1][col + 1][1] !== 'l' ? style[row - 1][col + 1] = '!' : false;
+    // en passant
+    let lastMove = moves[moves.length - 1];
+    if (row === 3 && col - 1 === lastMove[0].charCodeAt() - 'a'.charCodeAt() && lastMove[1] === '7' && lastMove[4] === '5') {
+      if (board[row][col - 1] === 'pd') {
+        style[row][col - 1] = '&';
+        style[row - 1][col - 1] = '%';
+      }
+    }
+    if (row === 3 && col + 1 === lastMove[0].charCodeAt() - 'a'.charCodeAt() && lastMove[1] === '7' && lastMove[4] === '5') {
+      if (board[row][col + 1] === 'pd') {
+        style[row][col + 1] = '&';
+        style[row - 1][col + 1] = '%';
+      }
+    }
   } else {  // Black pawns
     if (board[row + 1][col] === '') {
       style[row + 1][col] = '*';
@@ -32,6 +46,20 @@ const pawnPaths = (row, col, board, style) => {
     // pawn capture
     board[row + 1][col - 1] && board[row + 1][col - 1] !== '' && board[row - 1][col - 1][1] !== 'd' ? style[row + 1][col - 1] = '!' : false;
     board[row + 1][col + 1] && board[row + 1][col + 1] !== '' && board[row - 1][col + 1][1] !== 'd' ? style[row + 1][col + 1] = '!' : false;
+    // en passant
+    let lastMove = moves[moves.length - 1];
+    if (row === 4 && col - 1 === lastMove[0].charCodeAt() - 'a'.charCodeAt() && lastMove[1] === '2' && lastMove[4] === '4') {
+      if (board[row][col - 1] === 'pl') {
+        style[row][col - 1] = '&';
+        style[row + 1][col - 1] = '%';
+      }
+    }
+    if (row === 4 && col + 1 === lastMove[0].charCodeAt() - 'a'.charCodeAt() && lastMove[1] === '2' && lastMove[4] === '4') {
+      if (board[row][col + 1] === 'pl') {
+        style[row][col + 1] = '&';
+        style[row + 1][col + 1] = '%';
+      }
+    }
   }
 }
 

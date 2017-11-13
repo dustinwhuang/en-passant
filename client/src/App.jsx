@@ -51,7 +51,7 @@ class App extends React.Component {
       this.setState({selected: true, square: square, style: style});
       this.highlightPaths(row, col);
     } else if (this.state.selected) {
-      if (/[\*!]/.test(style[row][col]) && (square.row !== this.state.square.row || square.col !== this.state.square.col)) {
+      if (/[\*!%]/.test(style[row][col]) && (square.row !== this.state.square.row || square.col !== this.state.square.col)) {
         let start = `${(/[RNBQK]/.exec(board[sqRow][sqCol]) || [''])[0]}${this.state.square.col}${this.state.square.row}`;
         let finish = `${board[row][col] ? 'x' : '-'}${(/[RNBQK]/.exec(board[row][col]) || [''])[0]}${square.col}${square.row}`;
         console.log(start + finish);
@@ -59,6 +59,9 @@ class App extends React.Component {
         console.log(this.state.moves);
         board[row][col] = board[sqRow][sqCol];
         board[sqRow][sqCol] = '';
+        if (style[row][col] === '%') {  //en passant
+          board[sqRow][col] = '';
+        }
         this.sendBoard(board, moves);
       }
       this.setState({selected: false, board: board, moves: moves, style: JSON.parse(this.state.clearStyles)})
@@ -68,8 +71,9 @@ class App extends React.Component {
   highlightPaths(row, col) {
     let board = this.state.board;
     let style = this.state.style;
+    let moves = this.state.moves;
 
-    findPaths(row, col, board, style);
+    findPaths(row, col, board, style, moves);
 
     this.setState({style: style});
   }

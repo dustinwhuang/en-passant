@@ -11,8 +11,10 @@ class SquareView extends React.Component {
       return {backgroundColor: 'hotPink'};
     } else if (style === '*' && settings.paths) {
       return {backgroundColor: 'mistyRose'};
-    } else if (style === '!' && settings.paths) {
+    } else if (style === '!' || style === '%' && settings.paths) {
       return {backgroundColor: 'pink'};
+    } else if (style === '&' && settings.paths) {
+      return {backgroundColor: 'purple'};
     } else if ((squareId.charCodeAt() + row) % 2 === 0) {
       return {backgroundColor: 'lightGrey'};
     } else {
