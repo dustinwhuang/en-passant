@@ -1,4 +1,5 @@
 import React from 'react'
+import Promise from 'bluebird'
 import BoardView from './BoardView.jsx'
 import MovesView from './MovesView.jsx'
 import {findPaths} from './Pathing.js'
@@ -33,7 +34,6 @@ class App extends React.Component {
     this.toggleSettings = this.toggleSettings.bind(this);
 
     this.getBoard(props.match.params.id);
-    this.state.interval = setInterval(() => this.getBoard(props.match.params.id), 500);
   }
 
   handleSquareClick(square) {
@@ -95,7 +95,7 @@ class App extends React.Component {
         }
       })
       .then(game => this.setState({board: game.board, moves: game.moves, updatedAt: game.updatedAt}))
-      .catch(() => {/* Wait for update */});
+      .finally(() => this.getBoard(id));
   }
 
   sendBoard(board, moves) {
